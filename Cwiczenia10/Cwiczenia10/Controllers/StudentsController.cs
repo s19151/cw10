@@ -36,7 +36,14 @@ namespace Cwiczenia10.Controllers
 
             if (s != null)
             {
-                _dbContext.Entry(s).CurrentValues.SetValues(student);
+                //_dbContext.Entry(s).CurrentValues.SetValues(student);
+
+                s.FirstName = student.FirstName;
+                s.LastName = student.LastName;
+                s.BirthDate = student.BirthDate;
+                s.IdEnrollment = student.IdEnrollment;
+                s.Password = student.Password;
+
                 _dbContext.SaveChanges();
 
                 return Ok(s);
