@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cwiczenia10.DTO.Requests;
+using Cwiczenia10.DTO.Responses;
 using Cwiczenia10.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -62,14 +63,18 @@ namespace Cwiczenia10.Controllers
             student.BirthDate = DateTime.Parse(request.BirthDate);
             student.IdEnrollment = enrollment.IdEnrollment;
 
+            var response = new EnrollmentResponse();
+
+            response.IdEnrollment = enrollment.IdEnrollment;
+            response.Semester = enrollment.Semester;
+            response.IdStudy = enrollment.IdStudy;
+            response.StartDate = enrollment.StartDate;
+
             _dbContext.Student.Add(student);
 
             _dbContext.SaveChanges();
 
-            //zwrócenie enrollment wyrzuca błąd jsona
-            //return Created("", enrollment);
-
-            return Ok("działa");
+            return Created("", response);
         }
 
         [HttpPost("promotions")]
@@ -95,10 +100,14 @@ namespace Cwiczenia10.Controllers
 
             var enrollment = _dbContext.Enrollment.Find(id);
 
-            //to samo
-            //return Created("", enrollment);
+            var response = new EnrollmentResponse();
 
-            return Ok(id);
+            response.IdEnrollment = enrollment.IdEnrollment;
+            response.Semester = enrollment.Semester;
+            response.IdStudy = enrollment.IdStudy;
+            response.StartDate = enrollment.StartDate;
+
+            return Created("", response);
         }
     }
 }
